@@ -1,0 +1,4 @@
+.vs/
+tenants.db
+*.log
+__pycache__/
