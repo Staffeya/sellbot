@@ -41,11 +41,15 @@ def check_subscription(telegram_id):
     return result and result[0] == 1
 
 # Стартовая команда
-@dp.message_handler(commands=['start'])
-async def welcome(message: types.Message):
-    markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(KeyboardButton("🛒 Register Store"), KeyboardButton("💳 Buy Subscription"))
-    await message.answer("👋 Welcome to the Bot Store!\nChoose an option below:", reply_markup=markup)
+def start_bot_seller():
+    @dp.message_handler(commands=['start'])
+    async def welcome(message: types.Message):
+        markup = ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add(KeyboardButton("🛒 Register Store"), KeyboardButton("💳 Buy Subscription"))
+        await message.answer("👋 Welcome to the Bot Store!", reply_markup=markup)
+
+    print("Bot Seller is running...")
+    executor.start_polling(dp, skip_updates=True)
 
 # Регистрация арендатора
 @dp.message_handler(lambda message: message.text == "🛒 Register Store")
@@ -100,3 +104,4 @@ if __name__ == "__main__":
     setup_database()
     print("Bot Seller is running...")
     executor.start_polling(dp, skip_updates=True)
+    start_bot_seller()

@@ -1,11 +1,10 @@
 ﻿from flask import Flask, request, jsonify
 import stripe
 import sqlite3
-import requests
 
 app = Flask(__name__)
 stripe.api_key = "sk_test_51QUQGNALZk2185tZWDxL8VX9DF2tnbXLLTRVVTKRTEsffh9G6LJL7Wnuc0sHzzGqYMwPa79pPcyATZMZnDvs2oop00DISVKF5X"
-webhook_secret = "whsec_e734bdcce3316a42cdad0b559836aabf89351b6792606fadef6eadcfcd2e66fd "
+webhook_secret = "whsec_e734bdcce3316a42cdad0b559836aabf89351b6792606fadef6eadcfcd2e66fd"
 
 # Обработчик Webhook
 @app.route("/webhook", methods=["POST"])
@@ -36,6 +35,10 @@ def stripe_webhook():
 
     return jsonify({"status": "success"}), 200
 
+def start_webhook_server():
+    print("Stripe Webhook Server is running on http://127.0.0.1:5000/webhook")
+    app.run(port=5000, debug=False, use_reloader=False)
 
+# Локальный запуск сервера
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    start_webhook_server()
